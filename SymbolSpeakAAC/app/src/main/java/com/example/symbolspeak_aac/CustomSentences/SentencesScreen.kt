@@ -14,6 +14,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.symbolspeak_aac.CustomSentences.SentenceEvent
@@ -58,7 +60,10 @@ fun SentencesScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    Text(text = sentence.text, modifier = Modifier.padding(5.dp))
+                    Text(text = sentence.text,
+                        modifier = Modifier
+                            .semantics { contentDescription = "sentence" }
+                            .padding(5.dp))
                     Row(
                         modifier = Modifier
                             .padding(5.dp),

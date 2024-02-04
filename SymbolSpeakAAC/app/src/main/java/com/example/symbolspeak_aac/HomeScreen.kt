@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
@@ -62,6 +64,7 @@ fun HomeScreen(
         Button(
             onClick = { showHistory = true },
             modifier = Modifier
+                .semantics { contentDescription = "showHistory" }
                 .fillMaxWidth()
                 .padding(5.dp)
         ) {
@@ -118,37 +121,50 @@ fun HomeScreen(
                 }
             }
             Column {
-                Button(
-                    onClick = { chosenSymbols.deleteLast() },
+                Card(
                     modifier = Modifier
-                        .padding(5.dp)
-                        .height(40.dp)
+                        .semantics { contentDescription = "delete" }
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete last symbol"
-                    )
+                    Button(
+                        onClick = { chosenSymbols.deleteLast() },
+                        modifier = Modifier
+                            .semantics { contentDescription = "delete" }
+                            .padding(5.dp)
+                            .height(40.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete last symbol"
+                        )
+                    }
                 }
 
-                Button(onClick = {
-                    if(chosenSymbols.chosen.isNotEmpty()) {
-                        history.add(chosenSymbols.chosen)
-                        ttsViewModel.onValueChange(chosenSymbols.chosen)
-                        ttsViewModel.textToSpeech(
-                            context,
-                            ttsRate = ttsRate.value.toFloat(),
-                            text = ""
-                        )
-                    }},
-                    enabled = state.isButtonEnabled,
+                Card(
                     modifier = Modifier
-                        .padding(5.dp)
-                        .height(40.dp)
+                        .semantics { contentDescription = "tts" }
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.PlayArrow,
-                        contentDescription = "Play sentence"
-                    )
+                    Button(onClick = {
+                        if (chosenSymbols.chosen.isNotEmpty()) {
+                            history.add(chosenSymbols.chosen)
+                            ttsViewModel.onValueChange(chosenSymbols.chosen)
+                            ttsViewModel.textToSpeech(
+                                context,
+                                ttsRate = ttsRate.value.toFloat(),
+                                text = ""
+                            )
+                        }
+                    },
+                        enabled = state.isButtonEnabled,
+                        modifier = Modifier
+                            .semantics { contentDescription = "tts" }
+                            .padding(5.dp)
+                            .height(40.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.PlayArrow,
+                            contentDescription = "Play sentence"
+                        )
+                    }
                 }
             }
         }

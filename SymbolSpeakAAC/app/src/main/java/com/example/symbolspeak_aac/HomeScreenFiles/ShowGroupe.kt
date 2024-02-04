@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,14 +40,18 @@ fun ShowGroup(
 
     Card(
         modifier = Modifier
+            .semantics { contentDescription = type }
             .padding(3.dp)
             .fillMaxWidth(),
         border = BorderStroke(3.dp, color = colorPicker(type = type)),
     ) {
         Button(
             onClick = { show = true },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-            modifier = Modifier.height(100.dp)
+            colors = ButtonDefaults
+                .buttonColors(backgroundColor = Color.White),
+            modifier = Modifier
+                .semantics { contentDescription = type }
+                .height(100.dp)
         ) {
             Group(type = type, image = symbols[0].imageURL)
             if (show) {

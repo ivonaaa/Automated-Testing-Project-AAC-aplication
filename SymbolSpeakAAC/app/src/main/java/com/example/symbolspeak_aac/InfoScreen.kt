@@ -9,6 +9,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.Popup
 import com.example.symbolspeak_aac.InfoScreenFiles.PeopleWhoNeedAACScreen
@@ -28,7 +30,10 @@ fun InfoScreen(
             modifier = Modifier
                 .padding(5.dp)
         ) {
-            Text(text = stringResource(id = R.string.infoIntro), fontSize = 20.sp)
+            Text(
+                modifier = Modifier.semantics { contentDescription = "InfoText" },
+                text = stringResource(id = R.string.infoIntro),
+                fontSize = 20.sp)
         }
 
         Column {

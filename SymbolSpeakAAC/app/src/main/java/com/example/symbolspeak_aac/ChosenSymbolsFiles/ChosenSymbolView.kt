@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.symbolspeak_aac.Symbol.Symbol
@@ -23,13 +25,15 @@ fun ChosenSymbolView(
 ) {
     Card(
         modifier = Modifier
+            .semantics { contentDescription = "chosen" }
             .padding(2.dp)
             .fillMaxWidth(),
         border = BorderStroke(2.dp, Color.White),
     ) {
         Button(onClick = { chosenSymbols.delete(index) },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-            modifier = Modifier.height(100.dp)
+            modifier = Modifier
+                .height(100.dp)
         ) {
             Column(
                 modifier = Modifier.padding(1.dp),

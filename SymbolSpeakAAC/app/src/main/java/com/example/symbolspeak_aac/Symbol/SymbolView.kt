@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.symbolspeak_aac.ChosenSymbolsFiles.ChosenSymbols
@@ -19,13 +21,16 @@ fun SymbolView(
 ) {
     Card(
         modifier = Modifier
+            .semantics { contentDescription = product.title }
             .padding(3.dp)
             .fillMaxWidth(),
         border = BorderStroke(3.dp, color = colorPicker(type = product.type)),
     ) {
         Button(onClick = { chosenSymbols.add(product) },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-            modifier = Modifier.height(100.dp)
+            modifier = Modifier
+                .semantics { contentDescription = product.title }
+                .height(100.dp)
         ) {
             SymbolLayout(product = product)
         }
@@ -61,7 +66,9 @@ fun SymbolLayout(
     product: Symbol
 ) {
     Column(
-        modifier = Modifier.padding(1.dp),
+        modifier = Modifier
+            .semantics { contentDescription = product.title }
+            .padding(1.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

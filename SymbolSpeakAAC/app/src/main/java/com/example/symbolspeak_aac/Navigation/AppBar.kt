@@ -5,7 +5,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.symbolspeak_aac.R
@@ -13,7 +17,8 @@ import com.example.symbolspeak_aac.R
 @Composable
 fun AppBar(
     navController: NavController,
-    onNavigationIconClick : () -> Unit
+    onNavigationIconClick: () -> Unit,
+    modifier: Modifier
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -27,7 +32,9 @@ fun AppBar(
         backgroundColor = MaterialTheme.colors.primary,
         contentColor = MaterialTheme.colors.onPrimary,
         navigationIcon = {
-            IconButton(onClick = onNavigationIconClick) {
+            IconButton(onClick = onNavigationIconClick,
+                 modifier = Modifier.semantics { contentDescription = "appBar" }
+            ) {
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = "Toggle drawer")

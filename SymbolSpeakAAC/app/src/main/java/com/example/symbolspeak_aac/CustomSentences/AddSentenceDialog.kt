@@ -11,6 +11,8 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.symbolspeak_aac.CustomSentences.SentenceEvent
 import com.example.symbolspeak_aac.CustomSentences.SentenceState
@@ -30,6 +32,7 @@ fun AddSentenceDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 TextField(
+                    modifier = Modifier.semantics { contentDescription = "inputSentence"},
                     value = state.text,
                     onValueChange = {
                         onEvent(SentenceEvent.SetText(it))
@@ -42,12 +45,17 @@ fun AddSentenceDialog(
         },
         buttons = {
             Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .semantics { contentDescription = "Save"}
+                    .fillMaxWidth(),
                 contentAlignment = Alignment.Center,
             ) {
                 Button(onClick = {
                     onEvent(SentenceEvent.SaveSentence)
-                }) {
+                },
+                    modifier = Modifier
+                        .semantics { contentDescription = "Save"}
+                    ) {
                     Text(text = "Save sentence")
                 }
             }
