@@ -101,6 +101,83 @@ public class TestMobileAACApp {
         Assert.assertTrue(isSymbolPresent, "Selected symbol is still present after deletion.");
     }
 
+    @Test
+    public void testSentenceInput() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        MobileElement appBar = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Toggle drawer']"));
+        appBar.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(MobileBy.xpath("//*[@content-desc='Go to custom sentences screen']")));
+        MobileElement customSentenceMenuItem = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Go to custom sentences screen']"));
+        customSentenceMenuItem.click();
+
+        MobileElement add = (MobileElement) driver.findElement(MobileBy.AccessibilityId("Add sentence"));
+        add.click();
+
+        MobileElement textField = (MobileElement) driver.findElement(MobileBy.xpath("//android.widget.EditText"));
+        textField.sendKeys("Hello");
+
+        // Save the sentence
+        MobileElement saveButton = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Save']"));
+        saveButton.click();
+
+        MobileElement sentence = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='sentence']"));
+        String actualText = sentence.getText();
+
+        boolean isTextPresent = actualText.equals("Hello");
+
+        Assert.assertTrue(isTextPresent);
+    }
+
+    @Test
+    public void testSentenceInputDeletion() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        MobileElement appBar = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Toggle drawer']"));
+        appBar.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(MobileBy.xpath("//*[@content-desc='Go to custom sentences screen']")));
+        MobileElement customSentenceMenuItem = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Go to custom sentences screen']"));
+        customSentenceMenuItem.click();
+
+        MobileElement add = (MobileElement) driver.findElement(MobileBy.AccessibilityId("Add sentence"));
+        add.click();
+
+        MobileElement textField = (MobileElement) driver.findElement(MobileBy.xpath("//android.widget.EditText"));
+        textField.sendKeys("Hello");
+
+        // Save the sentence
+        MobileElement saveButton = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Save']"));
+        saveButton.click();
+
+        MobileElement delete = (MobileElement) driver.findElement(MobileBy.AccessibilityId("Delete sentence"));
+        delete.click();
+
+        boolean isSymbolPresent = driver.findElement(MobileBy.xpath("//*[@content-desc='sentence']")).isDisplayed();
+        Assert.assertTrue(isSymbolPresent, "Selected symbol is still present after deletion.");
+    }
+
+    @Test
+    public void testInfoPage() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        MobileElement appBar = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Toggle drawer']"));
+        appBar.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(MobileBy.xpath("//*[@content-desc='Learn about AAC screen']")));
+        MobileElement infoMenuItem = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Learn about AAC screen']"));
+        infoMenuItem.click();
+
+        MobileElement infoText = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='InfoText']"));
+
+        String actualText = infoText.getText();
+
+        boolean isTextPresent = actualText.equals("Do you want to know more about AAC? Click on the links below to learn more.");
+
+        Assert.assertTrue(isTextPresent);
+    }
+
     @AfterClass
     public void teardown(){
         driver.quit();
