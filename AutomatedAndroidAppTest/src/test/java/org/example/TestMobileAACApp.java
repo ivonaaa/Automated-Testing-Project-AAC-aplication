@@ -75,7 +75,31 @@ public class TestMobileAACApp {
         Assert.assertTrue(isSymbolPresent, "Selected symbol is still present after deletion.");
     }
 
+    @Test
+    public void testSymbolDeletionButton() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
+        MobileElement appBar = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Toggle drawer']"));
+        appBar.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(MobileBy.xpath("//*[@content-desc='Go to home screen']")));
+        MobileElement homeMenuItem = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Go to home screen']"));
+        homeMenuItem.click();
+
+        driver.findElement(MobileBy.AccessibilityId("Most used")).click();
+
+        MobileElement symbol = (MobileElement) driver.findElement(MobileBy.AccessibilityId("device"));
+        symbol.click();
+
+        MobileElement selectedSymbol = (MobileElement) driver.findElement(MobileBy.AccessibilityId("chosen"));
+        Assert.assertTrue(selectedSymbol.isDisplayed(), "Selected symbol is not displayed on the top.");
+
+        MobileElement delete = (MobileElement) driver.findElement(MobileBy.AccessibilityId("delete"));
+        delete.click();
+
+        boolean isSymbolPresent = driver.findElements(MobileBy.AccessibilityId("chosen")).isEmpty();
+        Assert.assertTrue(isSymbolPresent, "Selected symbol is still present after deletion.");
+    }
 
     @AfterClass
     public void teardown(){
