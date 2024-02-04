@@ -30,6 +30,26 @@ public class TestMobileAACApp {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
+    @Test
+    public void testSymbolSelection() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        MobileElement appBar = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Toggle drawer']"));
+        appBar.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(MobileBy.xpath("//*[@content-desc='Go to home screen']")));
+        MobileElement homeMenuItem = (MobileElement) driver.findElement(MobileBy.xpath("//*[@content-desc='Go to home screen']"));
+        homeMenuItem.click();
+
+        driver.findElement(MobileBy.AccessibilityId("Most used")).click();
+
+        MobileElement symbol = (MobileElement) driver.findElement(MobileBy.AccessibilityId("device"));
+        symbol.click();
+
+        MobileElement selectedSymbol = (MobileElement) driver.findElement(MobileBy.AccessibilityId("chosen"));
+        Assert.assertTrue(selectedSymbol.isDisplayed(), "Selected symbol is not displayed on the top.");
+    }
+
     @AfterClass
     public void teardown(){
         driver.quit();
